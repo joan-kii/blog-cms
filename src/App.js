@@ -1,8 +1,16 @@
+import React from 'react';
+import ContextProvider from './context/Context';
+import Topbar from './components/Topbar';
+import FormModal from './components/FormModal';
 
-function App() {
+const App = () => {
   return (
-    <div>
-    </div>
+    <>
+    <ContextProvider>
+      <Topbar />
+      {/* <FormModal /> */}
+    </ContextProvider>
+    </>
   );
 }
 

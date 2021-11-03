@@ -11,8 +11,8 @@ const Topbar = () => {
         <Container>
           <Navbar.Brand href="#home">Blog CMS</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="">Create Admin</Nav.Link>
-            <Nav.Link href="">Login</Nav.Link>
+            <Nav.Link href="">Posts</Nav.Link>
+            <Nav.Link href="">Drafts</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
