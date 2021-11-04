@@ -6,10 +6,10 @@ import FormModal from './components/FormModal';
 const App = () => {
   return (
     <>
-    <ContextProvider>
-      <Topbar />
-      {/* <FormModal /> */}
-    </ContextProvider>
+      <ContextProvider>
+        <Topbar />
+        <FormModal />
+      </ContextProvider>
     </>
   );
 }

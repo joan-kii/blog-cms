@@ -6,10 +6,14 @@ const ContextProvider = (props) => {
   
   const [showModal, setShowModal] = useState(true);
   const [newAdmin, setNewAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [showLogin, setShowLogin] = useState(true);
 
   const value = {
     showModal, setShowModal,
-    newAdmin, setNewAdmin
+    newAdmin, setNewAdmin,
+    currentUser, showLogin,
+    setShowLogin
   };
 
   return (
