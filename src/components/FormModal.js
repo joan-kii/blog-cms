@@ -46,15 +46,15 @@ const FormModal = () => {
         </Modal.Body>
         <Modal.Footer>
           {showLogin ?
-            <div>
-              <p>Don't have an admin account?</p>
-              <Button variant="primary" onClick={toggleForm}>
+            <div className="d-flex align-items-center">
+              <p className="mb-0">Don't have an admin account?</p>
+              <Button className="ms-3" variant="primary" onClick={toggleForm}>
                 Create Admin
               </Button>
             </div> :
-            <div>
-              <p>Do you have an admin account?</p>
-              <Button variant="primary" onClick={toggleForm}>
+            <div className="d-flex align-items-center">
+              <p className="mb-0">Do you have an admin account?</p>
+              <Button className="ms-3" variant="primary" onClick={toggleForm}>
                 Login
               </Button>
             </div>}
