@@ -14,7 +14,7 @@ const ContextProvider = (props) => {
     const URL = 'http://localhost:5000/admin/create';
     const options = {
       method: 'POST',
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify(newAdmin),
       headers: {
         'Content-Type': 'application/json'
@@ -22,7 +22,8 @@ const ContextProvider = (props) => {
     };
     try {
       const response = await fetch(URL, options);
-      console.log(response);
+      const user = response.json();
+      console.log(user);
     } catch (err) {
       console.log(err);
     }
