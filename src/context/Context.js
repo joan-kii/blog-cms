@@ -20,10 +20,9 @@ const ContextProvider = (props) => {
         'Content-Type': 'application/json'
       }
     };
-
     try {
-      const req = await fetch(URL, options);
-      console.log(req);
+      const response = await fetch(URL, options);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
