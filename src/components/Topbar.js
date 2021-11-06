@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+
+import { Context } from '../context/Context';
 
 const Topbar = () => {
+
+  const { currentUser } = useContext(Context);
+
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -14,6 +20,15 @@ const Topbar = () => {
             <Nav.Link href="">Posts</Nav.Link>
             <Nav.Link href="">Drafts</Nav.Link>
           </Nav>
+          <Navbar.Collapse className="justify-content-end">
+            { currentUser && 
+              <div>
+                <Navbar.Text className="me-3">
+                  {currentUser}
+                </Navbar.Text>
+                <Button variant="outline-secondary">Logout</Button>
+              </div> }
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

@@ -8,6 +8,7 @@ const ContextProvider = (props) => {
   const [newAdmin, setNewAdmin] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [showLogin, setShowLogin] = useState(true);
+  const [error, setError] = useState('');
 
   const createAdmin = async (newAdmin) => {
 
@@ -22,17 +23,21 @@ const ContextProvider = (props) => {
     };
     try {
       const response = await fetch(URL, options);
-      const user = response.json();
-      console.log(user);
+      // eslint-disable-next-line
+      const data = response.json().then(user => {
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('user', user.user);
+        setCurrentUser(localStorage.getItem('user'));
+      });
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
   const value = {
     showModal, setShowModal, newAdmin, setNewAdmin,
     currentUser, showLogin, setShowLogin, 
-    createAdmin
+    createAdmin, error
   };
 
   return (
