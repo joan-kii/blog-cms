@@ -15,7 +15,7 @@ const LoginForm = () => {
 
         <Form.Group className="mb-3" controlId="adminPassword">
           <Form.Label>Admin Password</Form.Label>
-          <Form.Control type="text" placeholder="Enter your Admin password" />
+          <Form.Control type="password" placeholder="Enter your Admin password" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Login

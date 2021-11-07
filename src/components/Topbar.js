@@ -9,7 +9,12 @@ import { Context } from '../context/Context';
 
 const Topbar = () => {
 
-  const { currentUser } = useContext(Context);
+  const { currentUser, setCurrentUser } = useContext(Context);
+  
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setCurrentUser(null);
+  };
 
   return (
     <>
@@ -26,7 +31,11 @@ const Topbar = () => {
                 <Navbar.Text className="me-3">
                   {currentUser}
                 </Navbar.Text>
-                <Button variant="outline-secondary">Logout</Button>
+                <Button 
+                  variant="outline-secondary"
+                  onClick={handleLogout}>
+                    Logout
+                </Button>
               </div> }
           </Navbar.Collapse>
         </Container>
