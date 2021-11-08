@@ -4,12 +4,14 @@ export const Context = createContext();
 
 const ContextProvider = (props) => {
   
+  // Context Utilities
   const [showModal, setShowModal] = useState(true);
   const [newAdmin, setNewAdmin] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [showLogin, setShowLogin] = useState(true);
   const [error, setError] = useState('');
 
+  // Create New Admin
   const createAdmin = async (newAdmin) => {
 
     const URL = 'http://localhost:5000/admin/create';
@@ -39,6 +41,7 @@ const ContextProvider = (props) => {
     }
   };
 
+  // Login Admin
   const loginAdmin = async (admin) => {
 
     const URL = 'http://localhost:5000/admin/login';

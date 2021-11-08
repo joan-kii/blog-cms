@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 import { Context } from '../context/Context';
 
@@ -20,10 +21,12 @@ const Topbar = () => {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Blog CMS</Navbar.Brand>
+          <Link className="nav-link" to="/">
+            <Navbar.Brand>Blog CMS</Navbar.Brand>
+          </Link>
           <Nav className="me-auto">
-            <Nav.Link href="">Posts</Nav.Link>
-            <Nav.Link href="">Drafts</Nav.Link>
+            <Link className="nav-link" to="/">Posts</Link>
+            <Link className="nav-link" to="/drafts">Drafts</Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
             { currentUser && 
