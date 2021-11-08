@@ -31,6 +31,36 @@ const ContextProvider = (props) => {
           localStorage.setItem('token', result.token);
           localStorage.setItem('user', result.user);
           setCurrentUser(localStorage.getItem('user'));
+          setError('');
+        }
+      });
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const loginAdmin = async (admin) => {
+
+    const URL = 'http://localhost:5000/admin/login';
+    const options = {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(admin),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const response = await fetch(URL, options);
+      // eslint-disable-next-line
+      const data = response.json().then(result => {
+        if (response.status !== 200) {
+          setError(result.message);
+        } else {
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('user', result.user);
+          setCurrentUser(localStorage.getItem('user'));
+          setError('');
         }
       });
     } catch (err) {
@@ -45,7 +75,7 @@ const ContextProvider = (props) => {
   const value = {
     showModal, setShowModal, newAdmin, setNewAdmin,
     currentUser, setCurrentUser, showLogin, 
-    setShowLogin, createAdmin, error
+    setShowLogin, createAdmin, loginAdmin, error
   };
 
   return (
