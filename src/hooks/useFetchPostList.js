@@ -22,6 +22,7 @@ const useFetchPostsList = () => {
       console.log(data);
     }
     fetchPosts();
+      // eslint-disable-next-line
   }, [])
 
   return { postList };

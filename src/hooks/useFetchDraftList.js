@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 const useFetchDraftList = () => {
 
   const URL = 'http://localhost:5000/admin/drafts';
+  const token = localStorage.getItem('token');
   const options = {
     method: 'GET',
     mode: 'cors',
     headers: {
     'Content-Type': 'application/json',
-    'Autorithation': `Bearer <${localStorage.getItem('token')}>`
+    'Autorithation': `JWT ${token}`
     }
   };
   const [draftList, setDraftList] = useState([]);
@@ -21,6 +22,7 @@ const useFetchDraftList = () => {
       console.log(data);
     }
     fetchDrafts();
+      // eslint-disable-next-line
   }, [])
 
   return { draftList };
