@@ -9,23 +9,25 @@ const useFetchDraftList = () => {
     mode: 'cors',
     headers: {
     'Content-Type': 'application/json',
-    'Autorithation': `JWT ${token}`
+    'Authorization': `Bearer ${token}`
     }
   };
-  const [draftList, setDraftList] = useState([]);
+  const [draftList, setDraftList] = useState(null);
+  const [loading, setLoading] = useState(true);
   
+  async function fetchDrafts() {
+    setLoading(true);
+    const response = await fetch(URL, options); 
+    const data = await response.json();
+    setDraftList(data);
+    setLoading(false);
+  }
   useEffect(() => {
-    async function fetchDrafts() {
-      const response = await fetch(URL, options); 
-      const data = await response.json();
-      setDraftList(data);
-      console.log(data);
-    }
     fetchDrafts();
       // eslint-disable-next-line
   }, [])
-
-  return { draftList };
+  
+  return [loading, draftList];
 };
 
 export default useFetchDraftList;

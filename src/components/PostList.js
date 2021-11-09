@@ -6,14 +6,25 @@ import useFetchPostsList from '../hooks/useFetchPostList';
 const PostList = () => {
   
   const { currentUser } = useContext(Context);
-  const postList = useFetchPostsList();
-  const firstPost = postList[0];
+  const [loading, postList]  = useFetchPostsList();
   
   return (
     <>
-      <h1>Post List</h1>
       {currentUser && 
-      <p>{firstPost}</p>}
+        <div>
+          <h1>Post List</h1>
+          {loading && <p>Loading...</p>}
+          {!loading && 
+            postList.map((post, index) => {
+              return (
+                <div key={index}>
+                  <p>{post.title}</p>
+                  <p>{post.description}</p>
+                </div>
+              )
+            })}
+        </div>
+      }
     </>
   )
 };

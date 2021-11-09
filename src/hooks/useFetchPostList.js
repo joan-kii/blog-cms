@@ -9,23 +9,25 @@ const useFetchPostsList = () => {
     mode: 'cors',
     headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer <${token}>`
+    'Authorization': `Bearer ${token}`
     }
   };
-  const [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState(null);
+  const [loading, setLoading] = useState(true);
   
+  async function fetchPosts() {
+    setLoading(true);
+    const response = await fetch(URL, options); 
+    const data = await response.json();
+    setPostList(data);
+    setLoading(false);
+  }
   useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch(URL, options); 
-      const data = await response.json();
-      setPostList(data);
-      console.log(data);
-    }
     fetchPosts();
       // eslint-disable-next-line
   }, [])
-
-  return { postList };
+  
+  return [loading, postList];
 };
 
 export default useFetchPostsList;
