@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 import { Context } from '../context/Context';
 import useFetchPostsList from '../hooks/useFetchPostList';
@@ -11,18 +13,26 @@ const PostList = () => {
   return (
     <>
       {currentUser && 
-        <div>
-          <h1>Post List</h1>
+        <div className="mx-auto mt-3 w-50">
+          <h1 className="text-center">Post List</h1>
           {loading && <p>Loading...</p>}
-          {!loading && 
-            postList.map((post, index) => {
-              return (
-                <div key={index}>
-                  <p>{post.title}</p>
-                  <p>{post.description}</p>
-                </div>
-              )
-            })}
+          <div>
+            {!loading && 
+              postList.map((post, index) => {
+                return (
+                  <Card 
+                    key={index}
+                    className="mx-auto my-3 w-75">
+                    <Card.Header as="h5">Post {index + 1}</Card.Header>
+                    <Card.Body>
+                      <Card.Title>Title: {post.title}</Card.Title>
+                      <Card.Text>Description: {post.description}</Card.Text>
+                      <Button variant="outline-primary">Edit Post</Button>
+                    </Card.Body>
+                  </Card>
+                )
+              })}
+            </div>
         </div>
       }
     </>

@@ -1,6 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import { Context } from '../context/Context';
 
 const useFetchDraftList = () => {
+
+  const { setCurrentUser } = useContext(Context);
 
   const URL = 'http://localhost:5000/admin/drafts';
   const token = localStorage.getItem('token');
@@ -19,8 +23,12 @@ const useFetchDraftList = () => {
     setLoading(true);
     const response = await fetch(URL, options); 
     const data = await response.json();
-    setDraftList(data);
-    setLoading(false);
+    if (response.status === 401) {
+      setCurrentUser(null);
+    } else {
+      setDraftList(data);
+      setLoading(false);
+    }
   }
   useEffect(() => {
     fetchDrafts();

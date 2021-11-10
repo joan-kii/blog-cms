@@ -9,7 +9,7 @@ import DraftList from './components/DraftList';
 
 const App = () => {
   return (
-    <>
+    <div className="vh-100 bg-secondary bg-opacity-25">
       <ContextProvider>
         <Topbar />
         <Routes>
@@ -18,7 +18,7 @@ const App = () => {
         </Routes>
         <FormModal />
       </ContextProvider>
-    </>
+    </div>
   );
 }
 
