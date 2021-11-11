@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { Context } from '../context/Context';
 import useFetchPostsList from '../hooks/useFetchPostList';
@@ -15,7 +16,12 @@ const PostList = () => {
       {currentUser && 
         <div className="mx-auto mt-3 w-50">
           <h1 className="text-center">Post List</h1>
-          {loading && <p>Loading...</p>}
+          {loading && 
+            <Spinner
+              animation="grow"
+              variant="dark">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>}
           <div>
             {!loading && 
               postList.map((post, index) => {
