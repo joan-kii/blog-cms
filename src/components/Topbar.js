@@ -35,10 +35,16 @@ const Topbar = () => {
                   {currentUser}
                 </Navbar.Text>
                 <Button 
-                  variant="outline-secondary"
+                  className="me-3"
+                  variant="outline-light"
                   onClick={handleLogout}>
                     Logout
                 </Button>
+                <Link 
+                  className="btn btn-outline-light"
+                  to="/">
+                    New Post
+                </Link>
               </div> }
           </Navbar.Collapse>
         </Container>
