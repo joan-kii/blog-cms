@@ -6,7 +6,7 @@ import Topbar from './components/Topbar';
 import FormModal from './components/FormModal';
 import PostList from './components/PostList';
 import DraftList from './components/DraftList';
-import EditDraft from './components/EditDraft';
+import CreateDraft from './components/CreateDraft';
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<PostList />} />
           <Route path="/drafts" element={<DraftList />} />
-          <Route path="/drafts/edit" element={<EditDraft />} />
+          <Route path="/drafts/create" element={<CreateDraft />} />
         </Routes>
         <FormModal />
       </ContextProvider>

@@ -42,8 +42,8 @@ const Topbar = () => {
                 </Button>
                 <Link 
                   className="btn btn-outline-light"
-                  to="/">
-                    New Post
+                  to="/drafts/create">
+                    New Draft
                 </Link>
               </div> }
           </Navbar.Collapse>
