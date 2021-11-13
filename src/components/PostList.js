@@ -25,7 +25,7 @@ const PostList = () => {
     <>
       {currentUser && 
         <div className="mx-auto mt-3 d-flex flex-column align-items-center">
-          <h1 className="text-center">Post List</h1>
+          <h1 className="text-center text-muted">Post List</h1>
           {loading && 
             <Spinner
               className="mt-5"

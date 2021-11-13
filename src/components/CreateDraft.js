@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Editor } from '@tinymce/tinymce-react';
 import Button from 'react-bootstrap/Button';
-import useSaveDraft from '../hooks/useSaveDraft';
 
 require('dotenv').config();
 
@@ -30,18 +29,19 @@ const CreateDraft = () => {
     setText(textRef.current.getContent());
   };
 
-  const useHandleSave = () => {
+  const handleSave = () => {
     const draft = {
       title,
       description,
       text
     };
-    useSaveDraft(draft);
-  };
+    console.log(draft);
+  }; 
 
   return (
     <>
-      <div className="mx-auto mt-4 py-2 px-5 w-50 d-flex flex-column bg-secondary bg-opacity-10 rounded">
+      <div 
+        className="mx-auto mt-4 py-2 px-5 h-auto w-50 d-flex flex-column bg-secondary bg-opacity-10 rounded">
         <div className="mt-2">
           <h3 className="mb-3 text-center text-muted">Title</h3>
           <Editor 
@@ -97,7 +97,7 @@ const CreateDraft = () => {
           <Button 
             variant="outline-primary"
             size="lg"
-            onClick={useHandleSave}>
+            onClick={handleSave}>
               Save Draft
           </Button>
           <Button 

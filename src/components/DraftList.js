@@ -25,7 +25,7 @@ const DraftList = () => {
     <>
       {currentUser && 
         <div className="mx-auto mt-3 d-flex flex-column align-items-center">
-          <h1 className="text-center">Draft List</h1>
+          <h1 className="text-center text-muted">Draft List</h1>
           {loading && 
             <Spinner
               className="mt-5"
