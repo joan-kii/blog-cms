@@ -19,7 +19,10 @@ const Topbar = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar 
+        sticky="top" 
+        bg="dark" 
+        variant="dark">
         <Container>
           <Link className="nav-link" to="/">
             <Navbar.Brand>Blog CMS</Navbar.Brand>

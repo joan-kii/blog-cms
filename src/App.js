@@ -10,7 +10,7 @@ import CreateDraft from './components/CreateDraft';
 
 const App = () => {
   return (
-    <div className="h-100 bg-secondary bg-opacity-25">
+    <div className="pb-5 h-full bg-secondary bg-opacity-25">
       <ContextProvider>
         <Topbar />
         <Routes>
