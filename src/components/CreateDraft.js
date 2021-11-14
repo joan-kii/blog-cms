@@ -1,6 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Editor } from '@tinymce/tinymce-react';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+
+import { Context } from '../context/Context';
+import saveDraft from '../modules/saveDraft';
 
 require('dotenv').config();
 
@@ -13,6 +18,10 @@ const CreateDraft = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [text, setText] = useState();
+
+  const { error, setError } = useContext(Context);
+
+  const navigate = useNavigate();
 
   const handleTitleChange = (e) => {
     e.preventDefault();
@@ -29,13 +38,18 @@ const CreateDraft = () => {
     setText(textRef.current.getContent());
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const draft = {
       title,
       description,
       text
     };
-    console.log(draft);
+    const sav = await saveDraft(draft)
+    if (sav) {
+      navigate('/drafts'); 
+    } else {
+      setError(error);
+    };
   }; 
 
   return (
@@ -53,7 +67,7 @@ const CreateDraft = () => {
               menubar: false,
               plugins: ["preview wordcount paste"],
               toolbar: 
-                  // eslint-disable-next-line
+                // eslint-disable-next-line
                 "undo redo | bold italic | \
                 alignleft aligncenter alignright"
             }}
@@ -106,6 +120,7 @@ const CreateDraft = () => {
               Publish Post
           </Button>
         </div>
+        {error && <Alert variant="danger">{error}</Alert>}
       </div>
     </>
   )
