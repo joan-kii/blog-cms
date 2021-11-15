@@ -1,10 +1,9 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Editor } from '@tinymce/tinymce-react';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
-import { Context } from '../context/Context';
 import saveDraft from '../modules/saveDraft';
 
 require('dotenv').config();
@@ -18,8 +17,9 @@ const CreateDraft = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [text, setText] = useState();
-
-  const { error, setError } = useContext(Context);
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
@@ -39,18 +39,27 @@ const CreateDraft = () => {
   };
 
   const handleSave = async () => {
+    setLoading(true);
     const draft = {
       title,
       description,
       text
     };
-    const sav = await saveDraft(draft)
-    if (sav) {
+    const saved = await saveDraft(draft)
+    console.log(saved);
+  }; 
+
+  /* useEffect(() => {
+    console.log(saved)
+    if (saved) {
+      setLoading(false);
+      setError('');
       navigate('/drafts'); 
     } else {
-      setError(error);
+      setLoading(false);
+      setError('Ooops... Something went wrong!');
     };
-  }; 
+  }, [saved, navigate, setError]) */
 
   return (
     <>
@@ -121,6 +130,7 @@ const CreateDraft = () => {
           </Button>
         </div>
         {error && <Alert variant="danger">{error}</Alert>}
+        {loading && <Alert variant="info">Saving...</Alert>}
       </div>
     </>
   )

@@ -13,11 +13,8 @@ const saveDraft = async (draft) => {
   };
 
   const request = await fetch(URL, options);
-  if (request.ok) {
-    return Promise.resolve(true);
-  } else {
-    throw new Error('Ooops... something went wrong!')
-  }
+  const success = await request.json();
+  return success;
 };
 
 export default saveDraft;
