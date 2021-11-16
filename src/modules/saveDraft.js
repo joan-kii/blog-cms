@@ -12,9 +12,8 @@ const saveDraft = async (draft) => {
     }
   };
 
-  const request = await fetch(URL, options);
-  const success = await request.json();
-  return success;
+  const response = await fetch(URL, options);
+  return response.json();
 };
 
 export default saveDraft;

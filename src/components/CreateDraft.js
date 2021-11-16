@@ -20,6 +20,7 @@ const CreateDraft = () => {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [handleSave, setHandleSave] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,28 +39,12 @@ const CreateDraft = () => {
     setText(textRef.current.getContent());
   };
 
-  const handleSave = async () => {
+  useEffect(() => {
     setLoading(true);
-    const draft = {
-      title,
-      description,
-      text
-    };
-    const saved = await saveDraft(draft)
-    console.log(saved);
-  }; 
-
-  /* useEffect(() => {
-    console.log(saved)
-    if (saved) {
-      setLoading(false);
-      setError('');
-      navigate('/drafts'); 
-    } else {
-      setLoading(false);
-      setError('Ooops... Something went wrong!');
-    };
-  }, [saved, navigate, setError]) */
+    const draft = {title, description, text};
+    saveDraft(draft).then((data) => console.log(data))
+    // eslint-disable-next-line
+  }, [handleSave])
 
   return (
     <>
@@ -93,7 +78,7 @@ const CreateDraft = () => {
               menubar: false,
               plugins: ["preview wordcount paste"],
               toolbar: 
-                  // eslint-disable-next-line
+                // eslint-disable-next-line
                 "undo redo | bold italic | \
                 alignleft aligncenter alignright"
             }}
@@ -120,7 +105,7 @@ const CreateDraft = () => {
           <Button 
             variant="outline-primary"
             size="lg"
-            onClick={handleSave}>
+            onClick={() => setHandleSave(true)}>
               Save Draft
           </Button>
           <Button 
