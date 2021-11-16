@@ -20,7 +20,6 @@ const CreateDraft = () => {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
-  const [handleSave, setHandleSave] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,12 +38,32 @@ const CreateDraft = () => {
     setText(textRef.current.getContent());
   };
 
-  useEffect(() => {
-    setLoading(true);
+  const handleSave = async () => {
     const draft = {title, description, text};
-    saveDraft(draft).then((data) => console.log(data))
-    // eslint-disable-next-line
-  }, [handleSave])
+    const URL = 'http://localhost:5000/admin/drafts/create';
+    const token = localStorage.getItem('token');
+    const options = {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(draft),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    
+    fetch(URL, options)
+      .then(response => {
+        return response.json()
+      })
+      .then(result => {
+        console.log(result)
+        setSaved(true);
+      }, 
+      (error) => {
+        setError(error);
+      })
+  };
 
   return (
     <>
@@ -105,7 +124,7 @@ const CreateDraft = () => {
           <Button 
             variant="outline-primary"
             size="lg"
-            onClick={() => setHandleSave(true)}>
+            onClick={handleSave}>
               Save Draft
           </Button>
           <Button 

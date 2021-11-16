@@ -1,4 +1,4 @@
-const saveDraft = async (draft) => {
+const saveDraft = (draft) => {
 
   const URL = 'http://localhost:5000/admin/drafts/create';
   const token = localStorage.getItem('token');
@@ -12,8 +12,9 @@ const saveDraft = async (draft) => {
     }
   };
 
-  const response = await fetch(URL, options);
-  return response.json();
+  const response = fetch(URL, options).then((res) => {
+    return res.json();
+  })
 };
 
 export default saveDraft;
