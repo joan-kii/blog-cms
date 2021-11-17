@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Editor } from '@tinymce/tinymce-react';
 import Button from 'react-bootstrap/Button';
@@ -13,12 +13,13 @@ const CreateDraft = () => {
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const textRef = useRef(null);
+  const notesRef = useRef(null);
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [text, setText] = useState();
+  const [notes, setNotes] = useState();
   const [loading, setLoading] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
@@ -38,31 +39,23 @@ const CreateDraft = () => {
     setText(textRef.current.getContent());
   };
 
+  const handleNotesChange = (e) => {
+    e.preventDefault();
+    setNotes(notesRef.current.getContent());
+  };
+
   const handleSave = async () => {
-    const draft = {title, description, text};
-    const URL = 'http://localhost:5000/admin/drafts/create';
-    const token = localStorage.getItem('token');
-    const options = {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify(draft),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    };
-    
-    fetch(URL, options)
-      .then(response => {
-        return response.json()
-      })
-      .then(result => {
-        console.log(result)
-        setSaved(true);
-      }, 
-      (error) => {
-        setError(error);
-      })
+    setLoading(true);
+    const draft = {title, description, text, notes};
+    const saved = await saveDraft(draft);
+    if (saved) {
+      setError('');
+      setLoading(false);
+      navigate('/drafts');
+    } else {
+      setLoading(false);
+      setError('Ooops... Something went wrong.');
+    }
   };
 
   return (
@@ -119,6 +112,23 @@ const CreateDraft = () => {
                 alignleft aligncenter alignright"
             }}
             onChange={handleTextChange} />
+        </div>
+        <div className="mt-2">
+          <h3 className="mb-3 text-center text-muted">Notes</h3>
+          <Editor 
+            onInit={(evt, editor) => notesRef.current = editor}
+            initialValue="<p>Notes</p>"
+            apiKey={process.env.REACT_APP_TINY_API_KEY}
+            init={{
+              height: 150,
+              menubar: false,
+              plugins: ["preview wordcount"],
+              toolbar: 
+                  // eslint-disable-next-line
+                "undo redo | bold italic | \
+                alignleft aligncenter alignright"
+            }}
+            onChange={handleNotesChange} />
         </div>
         <div className="my-4 d-flex justify-content-around">
           <Button 
