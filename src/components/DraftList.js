@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -7,10 +8,13 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import { Context } from '../context/Context';
 import useFetchDraftList from '../hooks/useFetchDraftList';
+import getSingleDraft from '../modules/getSingleDraft';
+import { Alert } from 'bootstrap';
 
 const DraftList = () => {
 
   const { currentUser } = useContext(Context);
+  const [error, setError] = useState('');
   const [loading, draftList]  = useFetchDraftList();
   const popover = (
     <Popover id="popover-basic">
@@ -20,6 +24,17 @@ const DraftList = () => {
       </Popover.Body>
     </Popover>
   );
+
+  const navigate = useNavigate();
+
+  const handleEdit = async (slug) => {
+    const response = await getSingleDraft(slug);
+    if (response) {
+      navigate('/drafts/update', {state: {response}});
+    } else {
+      setError('Ooops... Something went wrong.')
+    }
+  }; 
 
   return (
     <>
@@ -45,13 +60,15 @@ const DraftList = () => {
                       <Card.Title>Title: {draft.title}</Card.Title>
                       <Card.Text>Description: {draft.description}</Card.Text>
                       <OverlayTrigger placement="left" overlay={popover}>
-                        <Button variant="outline-primary">Edit Draft</Button>
+                        <Button onClick={() => handleEdit(draft.slug)}variant="outline-primary">Edit Draft</Button>
                       </OverlayTrigger>
                     </Card.Body>
                   </Card>
                 )
-              })}
-            </div>
+              })
+            }
+          </div>
+          {error && <Alert variant="danger">{error}</Alert>}       
         </div>
       }
     </>

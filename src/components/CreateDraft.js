@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Editor } from '@tinymce/tinymce-react';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
 import saveDraft from '../modules/saveDraft';
+import updateDraft from '../modules/updateDraft';
 
 require('dotenv').config();
 
@@ -23,6 +24,11 @@ const CreateDraft = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const editTitle = location.state?.response.title;
+  const editDescription = location.state?.response.description;
+  const editText = location.state?.response.text;
+  const editNotes = location.state?.response.notes;
 
   const handleTitleChange = (e) => {
     e.preventDefault();
@@ -58,6 +64,21 @@ const CreateDraft = () => {
     }
   };
 
+  const handleUpdate = async () => {
+    setLoading(true);
+    const updatedDraft = {editTitle, title, description, text, notes};
+    const saved = await updateDraft(updatedDraft);
+    console.log(saved)
+    if (saved) {
+      setError('');
+      setLoading(false);
+      navigate('/drafts');
+    } else {
+      setLoading(false);
+      setError('Ooops... Something went wrong.');
+    }
+  };
+
   return (
     <>
       <div 
@@ -66,7 +87,7 @@ const CreateDraft = () => {
           <h3 className="mb-3 text-center text-muted">Title</h3>
           <Editor 
             onInit={(evt, editor) => titleRef.current = editor}
-            initialValue="<h2>Post Title</h2>"
+            initialValue={(editTitle && `<h2>${editTitle}</h2>`) || "<h2>Post Title</h2>"}
             apiKey={process.env.REACT_APP_TINY_API_KEY}
             init={{
               height: 150,
@@ -83,7 +104,7 @@ const CreateDraft = () => {
           <h3 className="mb-3 text-center text-muted">Description</h3>
           <Editor 
             onInit={(evt, editor) => descriptionRef.current = editor}
-            initialValue="<h4>Description</h4>"
+            initialValue={editDescription || "<h4>Description</h4>"}
             apiKey={process.env.REACT_APP_TINY_API_KEY}
             init={{
               height: 250,
@@ -100,7 +121,7 @@ const CreateDraft = () => {
           <h3 className="mb-3 text-center text-muted">Post</h3>
           <Editor 
             onInit={(evt, editor) => textRef.current = editor}
-            initialValue="<p>Post Text</p>"
+            initialValue={editText || "<p>Post Text</p>"}
             apiKey={process.env.REACT_APP_TINY_API_KEY}
             init={{
               height: 400,
@@ -117,7 +138,7 @@ const CreateDraft = () => {
           <h3 className="mb-3 text-center text-muted">Notes</h3>
           <Editor 
             onInit={(evt, editor) => notesRef.current = editor}
-            initialValue="<p>Notes</p>"
+            initialValue={editNotes || "<p>Notes</p>"}
             apiKey={process.env.REACT_APP_TINY_API_KEY}
             init={{
               height: 150,
@@ -131,12 +152,20 @@ const CreateDraft = () => {
             onChange={handleNotesChange} />
         </div>
         <div className="my-4 d-flex justify-content-around">
-          <Button 
-            variant="outline-primary"
-            size="lg"
-            onClick={handleSave}>
-              Save Draft
-          </Button>
+          {location.state === null ?
+            <Button 
+              variant="outline-primary"
+              size="lg"
+              onClick={handleSave}>
+                Save Draft
+            </Button> :
+            <Button 
+              variant="outline-primary"
+              size="lg"
+              onClick={handleUpdate}>
+                Update Draft
+            </Button>
+          }
           <Button 
             variant="outline-primary"
             size="lg">

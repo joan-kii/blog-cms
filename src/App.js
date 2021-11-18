@@ -17,6 +17,7 @@ const App = () => {
           <Route path="/" element={<PostList />} />
           <Route path="/drafts" element={<DraftList />} />
           <Route path="/drafts/create" element={<CreateDraft />} />
+          <Route path="/drafts/update" element={<CreateDraft />} />
         </Routes>
         <FormModal />
       </ContextProvider>
