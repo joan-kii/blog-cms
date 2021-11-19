@@ -27,6 +27,9 @@ const DraftList = () => {
 
   const navigate = useNavigate();
 
+  const parser = new DOMParser();
+  let htmlDoc;
+
   const handleEdit = async (slug) => {
     const response = await getSingleDraft(slug);
     if (response) {
@@ -51,6 +54,7 @@ const DraftList = () => {
           <div className="w-50">
             {!loading && 
               draftList.map((draft, index) => {
+                htmlDoc = parser.parseFromString(draft.description, 'text/html');
                 return (
                   <Card 
                     key={index}
@@ -58,7 +62,7 @@ const DraftList = () => {
                     <Card.Header as="h5">Draft {index + 1}</Card.Header>
                     <Card.Body>
                       <Card.Title>Title: {draft.title}</Card.Title>
-                      <Card.Text>Description: {draft.description}</Card.Text>
+                      <Card.Text>Description: {htmlDoc.getElementsByTagName('p')[0].textContent}</Card.Text>
                       <OverlayTrigger placement="left" overlay={popover}>
                         <Button onClick={() => handleEdit(draft.slug)}variant="outline-primary">Edit Draft</Button>
                       </OverlayTrigger>

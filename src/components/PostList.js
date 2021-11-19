@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Badge from 'react-bootstrap/Badge';
 
 import { Context } from '../context/Context';
 import useFetchPostsList from '../hooks/useFetchPostList';
@@ -40,7 +41,13 @@ const PostList = () => {
                   <Card 
                     key={index}
                     className="mx-auto my-3 w-75">
-                    <Card.Header as="h5">Post {index + 1}</Card.Header>
+                    <Card.Header className="d-flex justify-content-between" as="h5">
+                      Post {index + 1}
+                      {post.published ? 
+                        <Badge bg="success">Published</Badge> :
+                        <Badge bg="danger">Not Published</Badge>
+                      }
+                    </Card.Header>
                     <Card.Body>
                       <Card.Title>Title: {post.title}</Card.Title>
                       <Card.Text>Description: {post.description}</Card.Text>
