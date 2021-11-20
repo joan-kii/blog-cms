@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -14,7 +14,6 @@ const PostList = () => {
   
   const { currentUser } = useContext(Context);
 
-  const [togglePublish, setTogglePublish] = useState(true);
   const [loading, postList]  = useFetchPostsList();
   const popover = (
     <Popover id="popover-basic">
@@ -26,14 +25,13 @@ const PostList = () => {
   );
 
   const handlePublish = async (slug) => {
-    setTogglePublish(false);
     const response = await publishPost(slug);
-    if (response) await setTogglePublish(true);
+    if (response) window.location.reload();
   };
 
   return (
     <>
-      {(currentUser && togglePublish) ?
+      {currentUser &&
         <div className="mx-auto mt-3 d-flex flex-column align-items-center">
           <h1 className="text-center text-muted">Post List</h1>
           {loading && 
@@ -76,12 +74,7 @@ const PostList = () => {
               })}
             </div>
         </div>
-      : <Spinner
-          className="mt-5"
-          animation="grow"
-          variant="dark">
-           <span className="visually-hidden">Loading...</span>
-    </Spinner>}
+        }
     </>
   )
 };
