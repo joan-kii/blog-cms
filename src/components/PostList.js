@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -8,10 +8,13 @@ import Badge from 'react-bootstrap/Badge';
 
 import { Context } from '../context/Context';
 import useFetchPostsList from '../hooks/useFetchPostList';
+import publishPost from '../modules/publishPost'; 
 
 const PostList = () => {
   
   const { currentUser } = useContext(Context);
+
+  const [togglePublish, setTogglePublish] = useState(true);
   const [loading, postList]  = useFetchPostsList();
   const popover = (
     <Popover id="popover-basic">
@@ -21,10 +24,16 @@ const PostList = () => {
       </Popover.Body>
     </Popover>
   );
-  
+
+  const handlePublish = async (slug) => {
+    setTogglePublish(false);
+    const response = await publishPost(slug);
+    if (response) await setTogglePublish(true);
+  };
+
   return (
     <>
-      {currentUser && 
+      {(currentUser && togglePublish) ?
         <div className="mx-auto mt-3 d-flex flex-column align-items-center">
           <h1 className="text-center text-muted">Post List</h1>
           {loading && 
@@ -52,7 +61,14 @@ const PostList = () => {
                       <Card.Title>Title: {post.title}</Card.Title>
                       <Card.Text>Description: {post.description}</Card.Text>
                       <OverlayTrigger placement="left" overlay={popover}>
-                        <Button variant="outline-primary">Unpublish Post</Button>
+                        {post.published ? 
+                          <Button 
+                            onClick={() => handlePublish(post.slug)} 
+                            variant="outline-primary">Unpublish Post</Button> :
+                          <Button 
+                            onClick={() => handlePublish(post.slug)} 
+                            variant="outline-primary">Publish Post</Button>
+                        }
                       </OverlayTrigger>
                     </Card.Body>
                   </Card>
@@ -60,7 +76,12 @@ const PostList = () => {
               })}
             </div>
         </div>
-      }
+      : <Spinner
+          className="mt-5"
+          animation="grow"
+          variant="dark">
+           <span className="visually-hidden">Loading...</span>
+    </Spinner>}
     </>
   )
 };

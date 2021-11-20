@@ -1,11 +1,11 @@
-const updateDraft = async (updatedDraft) => {
+const publishPost = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/drafts/update';
+  const URL = 'http://localhost:5000/admin/posts/publish';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',
     mode: 'cors',
-    body: JSON.stringify(updatedDraft),
+    body: JSON.stringify({slug}),
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -15,5 +15,6 @@ const updateDraft = async (updatedDraft) => {
   const response = await fetch(URL, options);
   return response.ok;
 };
-
-export default updateDraft;
+  
+  export default publishPost;
+  

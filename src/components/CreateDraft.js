@@ -68,7 +68,6 @@ const CreateDraft = () => {
     setLoading(true);
     const updatedDraft = {editTitle, title, description, text, notes};
     const saved = await updateDraft(updatedDraft);
-    console.log(saved)
     if (saved) {
       setError('');
       setLoading(false);
