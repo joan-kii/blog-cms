@@ -150,7 +150,7 @@ const CreateDraft = () => {
             }}
             onChange={handleNotesChange} />
         </div>
-        <div className="my-4 d-flex justify-content-around">
+        <div className="my-4">
           {location.state === null ?
             <Button 
               variant="outline-primary"
@@ -165,11 +165,6 @@ const CreateDraft = () => {
                 Update Draft
             </Button>
           }
-          <Button 
-            variant="outline-primary"
-            size="lg">
-              Publish Post
-          </Button>
         </div>
         {error && <Alert variant="danger">{error}</Alert>}
         {loading && <Alert variant="info">Saving...</Alert>}

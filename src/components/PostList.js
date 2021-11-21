@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -14,12 +15,22 @@ const PostList = () => {
   
   const { currentUser } = useContext(Context);
 
+  const navigate = useNavigate();
+
   const [loading, postList]  = useFetchPostsList();
-  const popover = (
-    <Popover id="popover-basic">
+  const popoverConvert = (
+    <Popover id="popover-convert">
       <Popover.Header as="h4">Convert to Draft</Popover.Header>
       <Popover.Body>
-        You will find this post in drafts to delete or edit it again.
+        You will find this post in drafts to edit it again.
+      </Popover.Body>
+    </Popover>
+  );
+  const popoverDelete = (
+    <Popover id="popover-delete">
+      <Popover.Header as="h4">Delete Post</Popover.Header>
+      <Popover.Body>
+      Are you sure you want to delete this post?
       </Popover.Body>
     </Popover>
   );
@@ -27,6 +38,14 @@ const PostList = () => {
   const handlePublish = async (slug) => {
     const response = await publishPost(slug);
     if (response) window.location.reload();
+  };
+
+  const manageComments = (slug, comments) => {
+    navigate('/post/comments', {state: {slug, comments}});
+  };
+
+  const handleDelete = async (slug) => {
+    console.log(slug)
   };
 
   return (
@@ -49,25 +68,36 @@ const PostList = () => {
                     key={index}
                     className="mx-auto my-3 w-75">
                     <Card.Header className="d-flex justify-content-between" as="h5">
-                      Post {index + 1}
                       {post.published ? 
                         <Badge bg="success">Published</Badge> :
                         <Badge bg="danger">Not Published</Badge>
                       }
+                      Post {index + 1}
                     </Card.Header>
                     <Card.Body>
                       <Card.Title>Title: {post.title}</Card.Title>
                       <Card.Text>Description: {post.description}</Card.Text>
-                      <OverlayTrigger placement="left" overlay={popover}>
+                      <Card.Text>Comments: {post.comments.length}</Card.Text>
+                      <div className="d-flex justify-content-between">
                         {post.published ? 
-                          <Button 
-                            onClick={() => handlePublish(post.slug)} 
-                            variant="outline-primary">Unpublish Post</Button> :
+                          <OverlayTrigger placement="left" overlay={popoverConvert}>
+                            <Button 
+                              onClick={() => handlePublish(post.slug)} 
+                              variant="outline-primary">Unpublish Post</Button>
+                          </OverlayTrigger> :
                           <Button 
                             onClick={() => handlePublish(post.slug)} 
                             variant="outline-primary">Publish Post</Button>
                         }
-                      </OverlayTrigger>
+                        {(post.comments.length > 0) &&
+                          <Button 
+                            onClick={() => manageComments(post.slug, post.comments)} 
+                            variant="outline-primary">Manage Comments</Button>
+                        }
+                        <OverlayTrigger placement="right" overlay={popoverDelete}>
+                          <Button onClick={() => handleDelete(post.slug)} variant="outline-danger">Delete Post</Button>
+                        </OverlayTrigger>
+                      </div>
                     </Card.Body>
                   </Card>
                 )

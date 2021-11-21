@@ -16,11 +16,19 @@ const DraftList = () => {
   const { currentUser } = useContext(Context);
   const [error, setError] = useState('');
   const [loading, draftList]  = useFetchDraftList();
-  const popover = (
-    <Popover id="popover-basic">
+  const popoverEdit = (
+    <Popover id="popover-edit">
       <Popover.Header as="h4">Edit Draft</Popover.Header>
       <Popover.Body>
         You can edit, publish or delete this draft.
+      </Popover.Body>
+    </Popover>
+  );
+  const popoverDelete = (
+    <Popover id="popover-delete">
+      <Popover.Header as="h4">Delete Draft</Popover.Header>
+      <Popover.Body>
+        Are you sure you want to delete this draft?
       </Popover.Body>
     </Popover>
   );
@@ -38,6 +46,14 @@ const DraftList = () => {
       setError('Ooops... Something went wrong.')
     }
   }; 
+
+  const handlePublish = async (slug) => {
+    console.log(slug)
+  };
+
+  const handleDelete = async (slug) => {
+    console.log(slug)
+  };
 
   return (
     <>
@@ -63,9 +79,15 @@ const DraftList = () => {
                     <Card.Body>
                       <Card.Title>Title: {draft.title}</Card.Title>
                       <Card.Text>Description: {htmlDoc.getElementsByTagName('p')[0].textContent}</Card.Text>
-                      <OverlayTrigger placement="left" overlay={popover}>
-                        <Button onClick={() => handleEdit(draft.slug)}variant="outline-primary">Edit Draft</Button>
-                      </OverlayTrigger>
+                      <div className=" d-flex justify-content-between">
+                        <OverlayTrigger placement="left" overlay={popoverEdit}>
+                          <Button onClick={() => handleEdit(draft.slug)} variant="outline-primary">Edit Draft</Button>
+                        </OverlayTrigger>
+                        <Button onClick={() => handlePublish(draft.slug)} variant="outline-primary">Publish Post</Button>
+                        <OverlayTrigger placement="right" overlay={popoverDelete}>
+                          <Button onClick={() => handleDelete(draft.slug)} variant="outline-danger">Delete Draft</Button>
+                        </OverlayTrigger>
+                      </div>
                     </Card.Body>
                   </Card>
                 )

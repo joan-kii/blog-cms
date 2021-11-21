@@ -7,6 +7,7 @@ import FormModal from './components/FormModal';
 import PostList from './components/PostList';
 import DraftList from './components/DraftList';
 import CreateDraft from './components/CreateDraft';
+import ManageComments from './components/ManageComments';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/drafts" element={<DraftList />} />
           <Route path="/drafts/create" element={<CreateDraft />} />
           <Route path="/drafts/update" element={<CreateDraft />} />
+          <Route path="/post/comments" element={<ManageComments />} />
         </Routes>
         <FormModal />
       </ContextProvider>
