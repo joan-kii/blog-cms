@@ -9,6 +9,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { Context } from '../context/Context';
 import useFetchDraftList from '../hooks/useFetchDraftList';
 import getSingleDraft from '../modules/getSingleDraft';
+import deleteDraft from '../modules/deleteDraft';
+import publishDraft from '../modules/publishDraft';
 import { Alert } from 'bootstrap';
 
 const DraftList = () => {
@@ -48,11 +50,13 @@ const DraftList = () => {
   }; 
 
   const handlePublish = async (slug) => {
-    console.log(slug)
+    const pubDraft = await publishDraft(slug);
+    if (pubDraft) navigate('/');
   };
 
   const handleDelete = async (slug) => {
-    console.log(slug)
+    const delDraft = await deleteDraft(slug);
+    if (delDraft) window.location.reload();
   };
 
   return (

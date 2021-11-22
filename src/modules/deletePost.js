@@ -1,9 +1,9 @@
-const publishPost = async (slug) => {
+const deletePost = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/posts/publish';
+  const URL = 'http://localhost:5000/admin/posts/delete';
   const token = localStorage.getItem('token');
   const options = {
-    method: 'POST',
+    method: 'DELETE',
     mode: 'cors',
     body: JSON.stringify({slug}),
     headers: {
@@ -15,6 +15,5 @@ const publishPost = async (slug) => {
   const response = await fetch(URL, options);
   return response.ok;
 };
-  
-export default publishPost;
-  
+    
+export default deletePost;

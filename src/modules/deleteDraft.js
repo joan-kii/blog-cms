@@ -1,9 +1,9 @@
-const publishPost = async (slug) => {
+const deleteDraft = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/posts/publish';
+  const URL = 'http://localhost:5000/admin/drafts/delete';
   const token = localStorage.getItem('token');
   const options = {
-    method: 'POST',
+    method: 'DELETE',
     mode: 'cors',
     body: JSON.stringify({slug}),
     headers: {
@@ -11,10 +11,9 @@ const publishPost = async (slug) => {
       'Authorization': `Bearer ${token}`
     }
   };
-
+  
   const response = await fetch(URL, options);
   return response.ok;
 };
-  
-export default publishPost;
-  
+      
+export default deleteDraft;

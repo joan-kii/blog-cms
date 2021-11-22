@@ -1,6 +1,6 @@
-const publishPost = async (slug) => {
+const publishDraft = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/posts/publish';
+  const URL = 'http://localhost:5000/admin/drafts/publish';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',
@@ -11,10 +11,9 @@ const publishPost = async (slug) => {
       'Authorization': `Bearer ${token}`
     }
   };
-
+  
   const response = await fetch(URL, options);
   return response.ok;
 };
-  
-export default publishPost;
-  
+    
+export default publishDraft;

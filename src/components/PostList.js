@@ -10,12 +10,17 @@ import Badge from 'react-bootstrap/Badge';
 import { Context } from '../context/Context';
 import useFetchPostsList from '../hooks/useFetchPostList';
 import publishPost from '../modules/publishPost'; 
+import convertToDraft from '../modules/convertToDraft';
+import deletePost from '../modules/deletePost'; 
 
 const PostList = () => {
   
   const { currentUser } = useContext(Context);
 
   const navigate = useNavigate();
+
+  const parser = new DOMParser();
+  let htmlDoc;
 
   const [loading, postList]  = useFetchPostsList();
   const popoverConvert = (
@@ -45,7 +50,13 @@ const PostList = () => {
   };
 
   const handleDelete = async (slug) => {
-    console.log(slug)
+    const delPost = await deletePost(slug);
+    if (delPost) window.location.reload();
+  };
+
+  const editPost = async (slug) => {
+    const edPost = convertToDraft(slug);
+    if (edPost) navigate('/drafts');
   };
 
   return (
@@ -63,6 +74,7 @@ const PostList = () => {
           <div className="w-50">
             {!loading && 
               postList.map((post, index) => {
+                htmlDoc = parser.parseFromString(post.description, 'text/html');
                 return (
                   <Card 
                     key={index}
@@ -76,15 +88,18 @@ const PostList = () => {
                     </Card.Header>
                     <Card.Body>
                       <Card.Title>Title: {post.title}</Card.Title>
-                      <Card.Text>Description: {post.description}</Card.Text>
+                      <Card.Text>Description: {htmlDoc.getElementsByTagName('p')[0].textContent}</Card.Text>
                       <Card.Text>Comments: {post.comments.length}</Card.Text>
                       <div className="d-flex justify-content-between">
+                        <OverlayTrigger placement="left" overlay={popoverConvert}>
+                          <Button 
+                            onClick={() => editPost(post.slug)} 
+                            variant="outline-primary">Edit Post</Button>
+                        </OverlayTrigger>
                         {post.published ? 
-                          <OverlayTrigger placement="left" overlay={popoverConvert}>
-                            <Button 
-                              onClick={() => handlePublish(post.slug)} 
-                              variant="outline-primary">Unpublish Post</Button>
-                          </OverlayTrigger> :
+                          <Button 
+                            onClick={() => handlePublish(post.slug)} 
+                            variant="outline-primary">Unpublish Post</Button> :
                           <Button 
                             onClick={() => handlePublish(post.slug)} 
                             variant="outline-primary">Publish Post</Button>
