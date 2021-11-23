@@ -4,7 +4,7 @@ import { Context } from '../context/Context';
 
 const useFetchPostsList = () => {
 
-  const { setCurrentUser } = useContext(Context);
+  const { currentUser, setCurrentUser } = useContext(Context);
 
   const URL = 'http://localhost:5000/admin/posts';
   const token = localStorage.getItem('token');
@@ -22,10 +22,9 @@ const useFetchPostsList = () => {
   async function fetchPosts() {
     setLoading(true);
     const response = await fetch(URL, options); 
+    if (response.status === 401) setCurrentUser(null);
     const data = await response.json();
-    if (response.status === 401) {
-      setCurrentUser(null);
-    } else {
+    if (data) {
       setPostList(data);
       setLoading(false);
     }
@@ -33,7 +32,7 @@ const useFetchPostsList = () => {
   useEffect(() => {
     fetchPosts();
       // eslint-disable-next-line
-  }, [])
+  }, [currentUser])
   
   return [loading, postList];
 };
