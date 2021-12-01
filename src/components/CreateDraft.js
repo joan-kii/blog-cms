@@ -103,7 +103,7 @@ const CreateDraft = () => {
           <h3 className="mb-3 text-center text-muted">Description</h3>
           <Editor 
             onInit={(evt, editor) => descriptionRef.current = editor}
-            initialValue={editDescription || "<h4>Description</h4>"}
+            initialValue={editDescription || "<p>Description</p>"}
             apiKey={process.env.REACT_APP_TINY_API_KEY}
             init={{
               height: 250,
