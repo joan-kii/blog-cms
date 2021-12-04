@@ -12,7 +12,7 @@
 
 - [CMS Demo]()
 - [API Code](https://github.com/joan-kii/blog-api)
-- [Blog Client Demo]()
+- [Blog Client Demo](https://blog-client-joan-kii.vercel.app/)
 - [Blog Client Code](https://github.com/joan-kii/blog-client)
 
 Deployed in Github Pages.
