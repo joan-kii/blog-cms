@@ -57,7 +57,7 @@ const CreateDraft = () => {
     if (saved) {
       setError('');
       setLoading(false);
-      navigate('/blog-cms/drafts');
+      navigate('/drafts');
     } else {
       setLoading(false);
       setError('Ooops... Something went wrong.');
@@ -71,7 +71,7 @@ const CreateDraft = () => {
     if (saved) {
       setError('');
       setLoading(false);
-      navigate('/blog-cms/drafts');
+      navigate('/drafts');
     } else {
       setLoading(false);
       setError('Ooops... Something went wrong.');
