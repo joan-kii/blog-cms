@@ -8,7 +8,7 @@ const useFetchPostsList = () => {
 
   const { currentUser, setCurrentUser } = useContext(Context);
 
-  const URL = process.env.API_URL + 'admin/posts';
+  const URL = process.env.REACT_APP_API_URL + 'admin/posts';
   const token = localStorage.getItem('token');
   const options = {
     method: 'GET',

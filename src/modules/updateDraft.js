@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const updateDraft = async (updatedDraft) => {
 
-  const URL = process.env.API_URL + 'admin/drafts/update';
+  const URL = process.env.REACT_APP_API_URL + 'admin/drafts/update';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',

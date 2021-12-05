@@ -16,7 +16,7 @@ const ContextProvider = (props) => {
   // Create New Admin
   const createAdmin = async (newAdmin) => {
 
-    const URL = process.env.API_URL + 'admin/create';
+    const URL = process.env.REACT_APP_API_URL + 'admin/create';
     const options = {
       method: 'POST',
       mode: 'cors',
@@ -46,7 +46,7 @@ const ContextProvider = (props) => {
   // Login Admin
   const loginAdmin = async (admin) => {
 
-    const URL = process.env.API_URL + 'admin/login';
+    const URL = process.env.REACT_APP_API_URL + 'admin/login';
     const options = {
       method: 'POST',
       mode: 'cors',
