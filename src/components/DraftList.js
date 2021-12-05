@@ -43,7 +43,7 @@ const DraftList = () => {
   const handleEdit = async (slug) => {
     const response = await getSingleDraft(slug);
     if (response) {
-      navigate('/drafts/update', {state: {response}});
+      navigate('/blog-cms/drafts/update', {state: {response}});
     } else {
       setError('Ooops... Something went wrong.')
     }
@@ -51,7 +51,7 @@ const DraftList = () => {
 
   const handlePublish = async (slug) => {
     const pubDraft = await publishDraft(slug);
-    if (pubDraft) navigate('/');
+    if (pubDraft) navigate('/blog-cms/');
   };
 
   const handleDelete = async (slug) => {

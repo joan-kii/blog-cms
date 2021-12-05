@@ -46,7 +46,7 @@ const PostList = () => {
   };
 
   const manageComments = (slug, comments) => {
-    navigate('/post/comments', {state: {slug, comments}});
+    navigate('/blog-cms/post/comments', {state: {slug, comments}});
   };
 
   const handleDelete = async (slug) => {
@@ -56,7 +56,7 @@ const PostList = () => {
 
   const editPost = async (slug) => {
     const edPost = convertToDraft(slug);
-    if (edPost) navigate('/drafts');
+    if (edPost) navigate('/blog-cms/drafts');
   };
 
   return (

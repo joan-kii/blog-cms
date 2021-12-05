@@ -17,7 +17,7 @@ const ManageComments = () => {
     
   const delComment = async (index) => {
     const deleted = await deleteComment(slug, index);
-    if (deleted) navigate('/');
+    if (deleted) navigate('/blog-cms/');
   };
 
   return (

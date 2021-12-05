@@ -15,11 +15,11 @@ const App = () => {
       <ContextProvider>
         <Topbar />
         <Routes>
-          <Route path="/" element={<PostList />} />
-          <Route path="/drafts" element={<DraftList />} />
-          <Route path="/drafts/create" element={<CreateDraft />} />
-          <Route path="/drafts/update" element={<CreateDraft />} />
-          <Route path="/post/comments" element={<ManageComments />} />
+          <Route path="/blog-cms/" element={<PostList />} />
+          <Route path="/blog-cms/drafts" element={<DraftList />} />
+          <Route path="/blog-cms/drafts/create" element={<CreateDraft />} />
+          <Route path="/blog-cms/drafts/update" element={<CreateDraft />} />
+          <Route path="/blog-cms/post/comments" element={<ManageComments />} />
         </Routes>
         <FormModal />
       </ContextProvider>
