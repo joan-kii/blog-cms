@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const publishPost = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/posts/publish';
+  const URL = process.env.API_URL + 'admin/posts/publish';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',

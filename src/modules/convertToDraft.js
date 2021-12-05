@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const convertToDraft = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/posts/convert';
+  const URL = process.env.API_URL + 'admin/posts/convert';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',

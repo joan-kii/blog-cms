@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const saveDraft = async (draft) => {
 
-  const URL = 'http://localhost:5000/admin/drafts/create';
+  const URL = process.env.API_URL + 'admin/drafts/create';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',

@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const updateDraft = async (updatedDraft) => {
 
-  const URL = 'http://localhost:5000/admin/drafts/update';
+  const URL = process.env.API_URL + 'admin/drafts/update';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',

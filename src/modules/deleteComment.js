@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const deleteComment = async (slug, index) => {
 
-  const URL = 'http://localhost:5000/admin/posts/comments';
+  const URL = process.env.API_URL + 'admin/posts/comments';
   const token = localStorage.getItem('token');
   const options = {
     method: 'POST',

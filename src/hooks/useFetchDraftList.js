@@ -2,11 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 
 import { Context } from '../context/Context';
 
+require('dotenv').config();
+
 const useFetchDraftList = () => {
 
   const { setCurrentUser } = useContext(Context);
 
-  const URL = 'http://localhost:5000/admin/drafts';
+  const URL = process.env.API_URL + 'admin/drafts';
   const token = localStorage.getItem('token');
   const options = {
     method: 'GET',

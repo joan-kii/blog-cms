@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect} from 'react';
 
+require('dotenv').config();
+
 export const Context = createContext();
 
 const ContextProvider = (props) => {
@@ -14,7 +16,7 @@ const ContextProvider = (props) => {
   // Create New Admin
   const createAdmin = async (newAdmin) => {
 
-    const URL = 'http://localhost:5000/admin/create';
+    const URL = process.env.API_URL + 'admin/create';
     const options = {
       method: 'POST',
       mode: 'cors',
@@ -44,7 +46,7 @@ const ContextProvider = (props) => {
   // Login Admin
   const loginAdmin = async (admin) => {
 
-    const URL = 'http://localhost:5000/admin/login';
+    const URL = process.env.API_URL + 'admin/login';
     const options = {
       method: 'POST',
       mode: 'cors',

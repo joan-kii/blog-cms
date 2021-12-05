@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const deletePost = async (slug) => {
 
-  const URL = 'http://localhost:5000/admin/posts/delete';
+  const URL = process.env.API_URL + 'admin/posts/delete';
   const token = localStorage.getItem('token');
   const options = {
     method: 'DELETE',

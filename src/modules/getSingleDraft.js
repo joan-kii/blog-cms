@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const getSingleDraft = async (slug) => {
 
-  const URL = `http://localhost:5000/admin/drafts/${slug}`;
+  const URL = process.env.API_URL + `admin/drafts/${slug}`;
   const token = localStorage.getItem('token');
   const options = {
     method: 'GET',
