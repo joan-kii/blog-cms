@@ -35,8 +35,8 @@ const ManageComments = () => {
                     Comment {index + 1}
                   </Card.Header>
                   <Card.Body>
-                    <Card.Title>User: {comment.user}</Card.Title>
-                    <Card.Text>Message: {comment.message}</Card.Text>
+                    <Card.Title>User: {comment.name}</Card.Title>
+                    <Card.Text>Message: {comment.comment}</Card.Text>
                     <Button 
                       onClick={() => delComment(index)} 
                       variant="outline-danger">Delete Comment</Button>
